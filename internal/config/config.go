@@ -5,8 +5,7 @@ import (
 )
 
 type Config struct {
-    SomeValue   string
-    LogFilePath string
+    SomeValue string
 }
 
 func Load(path string) (*Config, error) {
@@ -16,8 +15,7 @@ func Load(path string) (*Config, error) {
     }
 
     cfg := &Config{
-        SomeValue:   cfgFile.Section("").Key("some_value").String(),
-        LogFilePath: cfgFile.Section("").Key("log_file_path").String(),
+        SomeValue: cfgFile.Section("").Key("some_value").String(),
     }
     return cfg, nil
 }

@@ -10,22 +10,27 @@ import (
 )
 
 func main() {
+    // Проверяем, является ли сессия интерактивной
     isInteractive, err := svc.IsAnInteractiveSession()
     if err != nil {
         log.Fatalf("Не удалось определить тип сессии: %v", err)
     }
 
+    // Имя сервиса
+    serviceName := "MyGoService"
+
     // Загружаем конфигурацию
-    cfg, err := config.Load("config.ini")
+    cfg, err := config.Load("C:\\ProgramData\\MyService\\config.ini")
     if err != nil {
         log.Fatalf("Не удалось загрузить конфигурацию: %v", err)
     }
 
-    // Инициализируем логгер с использованием пути из конфигурации
-    logr, err := logger.New(cfg.LogFilePath)
+    // Инициализируем логгер с использованием имени сервиса
+    logr, err := logger.New(serviceName)
     if err != nil {
         log.Fatalf("Не удалось инициализировать логирование: %v", err)
     }
+    defer logr.Close()
 
     if !isInteractive {
         // Работаем как сервис
@@ -34,9 +39,9 @@ func main() {
             Logger: logr,
         }
 
-        err = svc.Run("MyGoService", service)
+        err = svc.Run(serviceName, service)
         if err != nil {
-            log.Fatalf("Сервис не смог запуститься: %v", err)
+            logr.Error("Сервис не смог запуститься: %v", err)
         }
         return
     }

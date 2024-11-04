@@ -1,4 +1,5 @@
 @echo off
+chcp 65001 >nul
 SET SERVICE_NAME=MyGoService
 SET DISPLAY_NAME=My Go Windows Service
 SET SERVICE_PATH=%~dp0myservice.exe

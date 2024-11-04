@@ -1,4 +1,5 @@
 @echo off
+chcp 65001 >nul
 REM Установка переменных
 SET SERVICE_NAME=MyGoService
 SET BUILD_PATH=%~dp0
